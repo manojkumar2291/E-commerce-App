@@ -29,6 +29,16 @@
     outline: none;
     color: #5c5c5c;
     font-size: 18px;
+    border-radius: 20px;
+}
+ input:hover{  
+    border: 1px solid blue;
+    
+    transition: 1s;
+}
+button:hover{
+    transform: scale(1.05);
+    transition: 1s;
 }
 .loginsignup-container button{
     width: 100% ;
@@ -36,10 +46,12 @@
     color: white;
     background: #ff4141;
     margin-top: 30px;
+    margin-left: 15px;
     border: none;
     font-size: 25px;
     cursor: pointer;
     font-weight: 500;
+    border-radius: 20px;
 }
 .loginsignup-login{
 margin-top: 20px;
