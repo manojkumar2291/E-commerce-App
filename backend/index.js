@@ -7,7 +7,7 @@ const multer=require('multer')
 const path=require('path')
 const cors=require('cors');
 const { log } = require('console');
-const {product}=require('./db')
+const {product,user}=require('./db')
 
 
 
@@ -38,6 +38,68 @@ app.post('/upload',upload.single('product'),(req,res)=>{
         image_url:`http://localhost:${port}/images/${req.file.filename}`
     })
 })
+
+//creating user
+app.post("/signup",async(req,res)=>{
+    let check =await user.findOne({email:req.body.email})
+    if(check){
+        return res.status(400).json({Success:false,erroe:"user already existing"})
+    }
+    let cart={};
+    for (let i = 0; i < 300; i++) {
+        cart[i]=0;
+    }
+    await user.create({
+        username:req.body.username,
+        email:req.body.email,
+        password:req.body.password,
+        cartData:cart,
+    })
+    const data={
+        user:{
+            id:user.id,
+        }
+    }
+    const token=jwt.sign(data,'secret_com');
+    res.json({
+        success:true,
+        
+        token
+    })
+})
+app.post('/login',async(req,res)=>{
+    let user=await user.findOne({email:req.body.email});
+    if(user){
+        const pass=req.body.password==user.password;
+        if(pass){
+            const data={
+                user:{
+                    id:user.id
+                }
+                
+            }
+            const token=jwt.sign(data,'secret_com')
+            res.json({
+                success:true,token
+            })
+        }
+        else{
+            res.json({
+                sucess:false,
+                msg:"invalid details"
+            })
+        }
+       
+    }
+    else{
+        res.json({
+            sucess:false,
+            msg:"invalid details"
+        })
+    }
+    
+})
+
 
 
 app.post("/addproduct",async(req,res)=>{

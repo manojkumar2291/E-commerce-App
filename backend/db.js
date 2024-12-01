@@ -38,25 +38,22 @@ const productschema=mongoose.Schema({
 const Userschema=mongoose.Schema({
     username:{
         tpye:String,
-        required:true
+        
         
     },
     email:{
     type:String,
-    required:true,
+    
     unique:true
     },
     password:{
         type:String,
-        required:true
+        
     },
     date:{
         type:Date,
         default:Date.now
     }
-})
-const adminschema=mongoose.Schema({
-    
 })
 
 const product=mongoose.model('product',productschema);
