@@ -1,5 +1,5 @@
 const mongoose=require('mongoose')
-mongoose.connect('mongodb+srv://manoj:manoj@cluster0.q0hhtbe.mongodb.net/e-commerce')
+mongoose.connect('mongodb+srv://podapatimanoj22:manoj@cluster0.7yyne.mongodb.net/commerce?retryWrites=true&w=majority&appName=Cluster0')
 //schema for creating products
 const productschema=mongoose.Schema({
     id:{
@@ -38,8 +38,6 @@ const productschema=mongoose.Schema({
 const Userschema=mongoose.Schema({
     username:{
         tpye:String,
-        
-        
     },
     email:{
     type:String,
@@ -50,6 +48,12 @@ const Userschema=mongoose.Schema({
         type:String,
         
     },
+    cartData: {
+        type: Map,
+        of: Number,
+        default: new Map(
+          Array.from({ length: 300 }, (_, i) => [i.toString(), 0])
+        ),},
     date:{
         type:Date,
         default:Date.now

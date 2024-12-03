@@ -68,12 +68,13 @@ app.post("/signup",async(req,res)=>{
     })
 })
 app.post('/login',async(req,res)=>{
-    let user=await user.findOne({email:req.body.email});
-    if(user){
-        const pass=req.body.password==user.password;
+    let userid=await user.findOne({email:req.body.email});
+    if(userid){
+        const pass=req.body.password===userid.password;
+        
         if(pass){
             const data={
-                user:{
+                userid:{
                     id:user.id
                 }
                 
@@ -149,6 +150,21 @@ app.get('/allproducts',async (req,res)=>{
 });
 
 
+app.get('/newcollections',async(req,res)=>{
+    let products=await product.find({});
+    let newcollection=products.slice(1).slice(-8);
+    res.send(newcollection);
+})
+app.get('/popularwomen',async(req,res)=>{
+    let products=await product.find({category:"women"});
+    let popularwomen=products.slice(0,4);
+    res.send(popularwomen);
+})
+
+
+app.post('/addtocart',async(req,res)=>{
+    let 
+})
 app.listen(port,(error)=>{
     if(!error){
         console.log('server running successfully');
